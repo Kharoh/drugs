@@ -75,3 +75,98 @@ def test_text_embedding_cached(tmp_path, monkeypatch):
 	arr2 = drug.text_embedding_cached(embed_fn, path=path, force=False, load_if_exists=True)
 	assert called["count"] == 1
 	assert np.allclose(arr1, arr2)
+
+
+def test_smiles_selfies_and_fingerprints(monkeypatch):
+	drug = Drug.from_pubchem_cid(1)
+	# Seed properties cache to avoid network
+	drug._pubchem_properties_cache = {"CanonicalSMILES": "CCO", "IUPACName": "ethanol"}
+
+	import types, sys
+	fake_selfies = types.SimpleNamespace(encoder=lambda s: f"SELFIES({s})")
+	monkeypatch.setitem(sys.modules, "selfies", fake_selfies)
+
+	assert drug.smiles() == "CCO"
+	assert drug.selfies() == "SELFIES(CCO)"
+
+	fp = drug.molecular_fingerprint(method="morgan", n_bits=128)
+	assert fp.shape == (128,)
+
+	drug2 = Drug.from_pubchem_cid(2)
+	drug2._pubchem_properties_cache = {"CanonicalSMILES": "CCO"}
+	sim = drug.similarity_to(drug2, fingerprint_method="morgan", n_bits=128)
+	assert sim == 1.0
+
+
+def test_molecular_properties(monkeypatch):
+	drug = Drug.from_pubchem_cid(1)
+	drug._pubchem_properties_cache = {"CanonicalSMILES": "CCO"}
+	props = drug.molecular_properties()
+	assert "lipinski_pass" in props
+	if props["qed"] is not None:
+		assert 0 <= props["qed"] <= 1
+	if props["tpsa"] is not None:
+		assert props["tpsa"] >= 0
+
+
+def test_batch_and_similarity_matrix(monkeypatch):
+	ids = [1, "CHEMBL25", "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"]
+	drugs = Drug.from_batch(ids, prefetch_properties=False, max_workers=2)
+	assert len(drugs) == 3
+	for d, expected_type in zip(drugs, [int, str, str]):
+		if expected_type is int:
+			assert d.pubchem_cid == 1
+		elif expected_type is str and d._chembl_id:
+			assert d._chembl_id == "CHEMBL25"
+
+	# Provide SMILES to avoid network and compute matrix
+	for d in drugs:
+		d._pubchem_properties_cache = {"CanonicalSMILES": "CCO"}
+	mat = Drug.batch_similarity_matrix(drugs, n_bits=64)
+	assert mat.shape == (3, 3)
+	assert np.allclose(np.diag(mat), 1.0)
+
+
+def test_fetch_chembl_bioactivities(monkeypatch):
+	drug = Drug.from_chembl_id("CHEMBL25")
+
+	monkeypatch.setattr(
+		"drugs.core.chembl_bioactivities",
+		lambda chembl_id, min_pchembl, assay_types, limit: [
+			{"activity_id": 1, "pchembl_value": 7.0, "assay_type": "B"},
+		],
+	)
+
+	rows = drug.fetch_chembl_bioactivities(min_pchembl=6.0, assay_types=["B"], limit=10)
+	assert rows[0]["pchembl_value"] == 7.0
+
+
+def test_fetch_drug_interactions(monkeypatch):
+	drug = Drug.from_pubchem_cid(2244)
+	drug._pubchem_properties_cache = {"IUPACName": "aspirin"}
+
+	payload = {
+		"interactionTypeGroup": [
+			{
+				"interactionType": [
+					{
+						"sourceDisclaimer": "Micromedex",
+						"interactionPair": [
+							{
+								"description": "Increased bleeding risk",
+								"interactionConcept": [
+									{"minConceptItem": {"name": "aspirin"}},
+									{"minConceptItem": {"name": "warfarin"}},
+								],
+							}
+						],
+					}
+				]
+			}
+		]
+	}
+
+	monkeypatch.setattr("drugs.core.rxnav_interactions", lambda drug_name: payload)
+	interactions = drug.fetch_drug_interactions()
+	assert interactions[0]["source"] == "Micromedex"
+	assert "warfarin" in interactions[0]["interactants"]

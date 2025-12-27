@@ -4,18 +4,28 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, Iterable, List, Optional
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, Union
 
 import numpy as np
 
+from .cache import APICache, get_default_cache
+from .chemistry import (
+    fingerprint_similarity,
+    mol_from_smiles,
+    molecular_fingerprint,
+    rdkit_properties,
+    to_selfies,
+)
 from .constants import PUBCHEM_MINIMAL_STABLE
 from .data_sources import (
+    chembl_bioactivities,
     chembl_mechanisms,
     chembl_molecules_by_inchikey,
     chembl_target_detail,
     list_pubchem_text_headings,
     pubchem_properties,
     pubchem_text_snippets,
+    rxnav_interactions,
 )
 from .id_mapping import (
     chembl_to_pubchem_cid,
@@ -47,8 +57,23 @@ class Drug:
     _pubchem_text_cache: Dict[str, Any] = field(default_factory=dict, init=False, repr=False)
     _chembl_mechanism_cache: Optional[List[Dict[str, Any]]] = field(default=None, init=False, repr=False)
     _target_detail_cache: Dict[str, Any] = field(default_factory=dict, init=False, repr=False)
+    _smiles_cache: Optional[str] = field(default=None, init=False, repr=False)
+    _selfies_cache: Optional[str] = field(default=None, init=False, repr=False)
+    _rdkit_mol_cache: Optional[Any] = field(default=None, init=False, repr=False)
+    _api_cache: Optional[APICache] = field(default_factory=get_default_cache, init=False, repr=False)
 
     # Identifier resolution -------------------------------------------------
+    def _cache_lookup(self, key: str, fetch_fn: Callable[[], Any]) -> Any:
+        cache = self._api_cache
+        if cache:
+            hit = cache.get(key)
+            if hit is not None:
+                return hit
+        value = fetch_fn()
+        if cache:
+            cache.set(key, value)
+        return value
+
     @property
     def pubchem_cid(self) -> Optional[int]:
         if self._pubchem_cid is not None:
@@ -127,10 +152,12 @@ class Drug:
         if cid is None:
             raise ValueError("Cannot fetch PubChem properties without a CID or a resolvable identifier.")
 
-        props = pubchem_properties(cid)
+        props = self._cache_lookup(f"pubchem_props:{cid}", lambda: pubchem_properties(cid))
         self._pubchem_properties_cache = props
         if not self._inchikey and props.get("InChIKey"):
             self._inchikey = props["InChIKey"]
+        if not self._smiles_cache and props.get("CanonicalSMILES"):
+            self._smiles_cache = props["CanonicalSMILES"]
         return props
 
     def fetch_pubchem_text(self, headings: Iterable[str] = PUBCHEM_MINIMAL_STABLE) -> Dict[str, Any]:
@@ -151,16 +178,22 @@ class Drug:
         ValueError
             If no resolvable PubChem CID is available.
         """
-        key = tuple(headings)
-        if key in self._pubchem_text_cache:
-            return self._pubchem_text_cache[key]
+        cache_key = None
+        try:
+            cache_key = f"pubchem_text:{','.join(headings)}"
+        except TypeError:
+            cache_key = None
+        if cache_key and cache_key in self._pubchem_text_cache:
+            return self._pubchem_text_cache[cache_key]
 
         cid = self.pubchem_cid
         if cid is None:
             raise ValueError("Cannot fetch PubChem text without a CID or a resolvable identifier.")
 
-        data = pubchem_text_snippets(cid, headings)
-        self._pubchem_text_cache[key] = data
+        key = f"pubchem_text:{cid}:{','.join(headings)}"
+        data = self._cache_lookup(key, lambda: pubchem_text_snippets(cid, headings))
+        if cache_key:
+            self._pubchem_text_cache[cache_key] = data
         return data
 
     def fetch_chembl_mechanisms(self, limit: int = 50) -> List[Dict[str, Any]]:
@@ -188,9 +221,28 @@ class Drug:
         if chembl_id is None:
             raise ValueError("Cannot fetch ChEMBL mechanisms without a ChEMBL ID or a resolvable identifier.")
 
-        mechs = chembl_mechanisms(chembl_id, limit=limit)
+        key = f"chembl_mechanisms:{chembl_id}:{limit}"
+        mechs = self._cache_lookup(key, lambda: chembl_mechanisms(chembl_id, limit=limit))
         self._chembl_mechanism_cache = mechs
         return mechs
+
+    def fetch_chembl_bioactivities(
+        self,
+        *,
+        min_pchembl: float = 5.0,
+        assay_types: Iterable[str] = ("B", "F"),
+        limit: int = 1000,
+    ) -> List[Dict[str, Any]]:
+        """Fetch ChEMBL bioactivity rows filtered by potency and assay type."""
+        chembl_id = self.chembl_id
+        if chembl_id is None:
+            raise ValueError("Cannot fetch ChEMBL bioactivities without a ChEMBL ID or a resolvable identifier.")
+        assay_types_tuple: Tuple[str, ...] = tuple(assay_types)
+        key = f"chembl_bio:{chembl_id}:{min_pchembl}:{','.join(assay_types_tuple)}:{limit}"
+        return self._cache_lookup(
+            key,
+            lambda: chembl_bioactivities(chembl_id, min_pchembl=min_pchembl, assay_types=assay_types_tuple, limit=limit),
+        )
 
     def fetch_target_details(self, target_chembl_id: str) -> Dict[str, Any]:
         """Fetch and cache target details for a ChEMBL target ID.
@@ -208,9 +260,55 @@ class Drug:
         if target_chembl_id in self._target_detail_cache:
             return self._target_detail_cache[target_chembl_id]
 
-        detail = chembl_target_detail(target_chembl_id)
+        key = f"chembl_target:{target_chembl_id}"
+        detail = self._cache_lookup(key, lambda: chembl_target_detail(target_chembl_id))
         self._target_detail_cache[target_chembl_id] = detail
         return detail
+
+    def fetch_drug_interactions(self, drug_name: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Fetch drug-drug interactions from RxNav using a best-effort drug name.
+
+        Parameters
+        ----------
+        drug_name : str, optional
+            Override the drug name to query. When omitted, the function attempts to use
+            IUPAC or synonym information from PubChem properties.
+
+        Returns
+        -------
+        list[dict]
+            Normalized interaction entries containing ``source``, ``description``, and
+            ``interactants`` (list of partner drug names).
+        """
+
+        if drug_name is None:
+            props = self.fetch_pubchem_properties()
+            drug_name = props.get("IUPACName") or props.get("Title") or (self.synonyms[0] if self.synonyms else None)
+        if not drug_name:
+            raise ValueError("A drug name is required to fetch interactions (provide explicitly or ensure PubChem properties include IUPACName).")
+
+        key = f"rxnav:{drug_name.lower()}"
+        payload = self._cache_lookup(key, lambda: rxnav_interactions(drug_name))
+        return self._normalize_rxnav(payload)
+
+    @staticmethod
+    def _normalize_rxnav(payload: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Normalize RxNav interaction payload into a compact list."""
+        if not payload:
+            return []
+        out: List[Dict[str, Any]] = []
+        for group in payload.get("interactionTypeGroup", []) or []:
+            for itype in group.get("interactionType", []) or []:
+                source = itype.get("sourceDisclaimer") or itype.get("sourceName")
+                for pair in itype.get("interactionPair", []) or []:
+                    desc = pair.get("description")
+                    partners = []
+                    for item in pair.get("interactionConcept", []) or []:
+                        name = item.get("minConceptItem", {}).get("name")
+                        if name:
+                            partners.append(name)
+                    out.append({"source": source, "description": desc, "interactants": dedupe_preserve_order(partners)})
+        return out
 
     # Derived views --------------------------------------------------------
     def target_accessions(self) -> List[str]:
@@ -241,6 +339,70 @@ class Drug:
                     if syn.get("syn_type") == "GENE_SYMBOL" and syn.get("component_synonym"):
                         symbols.append(syn["component_synonym"])
         return dedupe_preserve_order(symbols)
+
+    # Structure representations -------------------------------------------
+    def smiles(self) -> Optional[str]:
+        """Return canonical SMILES string resolved from PubChem properties."""
+        if self._smiles_cache:
+            return self._smiles_cache
+        props = self.fetch_pubchem_properties()
+        smi = props.get("CanonicalSMILES") or props.get("IsomericSMILES")
+        if smi:
+            self._smiles_cache = smi
+        return self._smiles_cache
+
+    def selfies(self) -> Optional[str]:
+        """Convert the molecule to SELFIES representation if possible."""
+        if self._selfies_cache:
+            return self._selfies_cache
+        smi = self.smiles()
+        if not smi:
+            return None
+        converted = to_selfies(smi)
+        self._selfies_cache = converted
+        return converted
+
+    def rdkit_mol(self) -> Any:
+        """Return an RDKit molecule for the drug's SMILES, caching the result."""
+        if self._rdkit_mol_cache is not None:
+            return self._rdkit_mol_cache
+        smi = self.smiles()
+        if not smi:
+            return None
+        self._rdkit_mol_cache = mol_from_smiles(smi)
+        return self._rdkit_mol_cache
+
+    def molecular_fingerprint(
+        self,
+        *,
+        method: str = "morgan",
+        n_bits: int = 2048,
+        radius: int = 2,
+        use_features: bool = False,
+    ) -> np.ndarray:
+        """Generate a molecular fingerprint for similarity calculations."""
+        mol = self.rdkit_mol()
+        return molecular_fingerprint(mol, method=method, n_bits=n_bits, radius=radius, use_features=use_features)
+
+    def similarity_to(
+        self,
+        other: "Drug",
+        *,
+        fingerprint_method: str = "morgan",
+        similarity_metric: str = "tanimoto",
+        n_bits: int = 2048,
+        radius: int = 2,
+        use_features: bool = False,
+    ) -> float:
+        """Compute structural similarity to another drug using fingerprints."""
+        fp_a = self.molecular_fingerprint(method=fingerprint_method, n_bits=n_bits, radius=radius, use_features=use_features)
+        fp_b = other.molecular_fingerprint(method=fingerprint_method, n_bits=n_bits, radius=radius, use_features=use_features)
+        return float(fingerprint_similarity(fp_a, fp_b, metric=similarity_metric))
+
+    def molecular_properties(self) -> Dict[str, Any]:
+        """Compute RDKit-derived molecular property panel (QED, TPSA, Lipinski, SA)."""
+        mol = self.rdkit_mol()
+        return rdkit_properties(mol)
 
     def text_corpus(self, headings: Iterable[str] = PUBCHEM_MINIMAL_STABLE) -> str:
         """Concatenate PubChem text snippets into a markdown-ish corpus.
@@ -429,6 +591,64 @@ class Drug:
     @classmethod
     def from_inchikey(cls, inchikey: str) -> "Drug":
         return cls(_inchikey=inchikey)
+
+    @classmethod
+    def from_batch(
+        cls,
+        identifiers: List[Union[int, str]],
+        *,
+        prefetch_properties: bool = False,
+        max_workers: int = 8,
+    ) -> List["Drug"]:
+        """Create Drug instances from a batch of identifiers using parallel calls."""
+
+        from concurrent.futures import ThreadPoolExecutor
+
+        def make_one(identifier: Union[int, str]) -> "Drug":
+            if isinstance(identifier, int) or (isinstance(identifier, str) and identifier.isdigit()):
+                drug = cls.from_pubchem_cid(int(identifier))
+            elif isinstance(identifier, str) and identifier.upper().startswith("CHEMBL"):
+                drug = cls.from_chembl_id(identifier)
+            else:
+                drug = cls.from_inchikey(str(identifier))
+            if prefetch_properties:
+                try:
+                    drug.fetch_pubchem_properties()
+                except Exception:
+                    pass
+            return drug
+
+        drugs: List[Drug] = []
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            for drug in pool.map(make_one, identifiers):
+                drugs.append(drug)
+        return drugs
+
+    @staticmethod
+    def batch_similarity_matrix(
+        drugs: List["Drug"],
+        *,
+        fingerprint_method: str = "morgan",
+        similarity_metric: str = "tanimoto",
+        n_bits: int = 2048,
+        radius: int = 2,
+        use_features: bool = False,
+    ) -> np.ndarray:
+        """Compute an all-vs-all similarity matrix for a list of Drug objects."""
+        n = len(drugs)
+        mat = np.zeros((n, n), dtype=float)
+        fingerprints = [
+            d.molecular_fingerprint(
+                method=fingerprint_method, n_bits=n_bits, radius=radius, use_features=use_features
+            )
+            for d in drugs
+        ]
+        for i in range(n):
+            mat[i, i] = 1.0
+            for j in range(i + 1, n):
+                score = fingerprint_similarity(fingerprints[i], fingerprints[j], metric=similarity_metric)
+                mat[i, j] = mat[j, i] = score
+        return mat
 
     def write_drug_markdown(
         self,

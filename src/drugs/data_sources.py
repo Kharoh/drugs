@@ -122,6 +122,62 @@ def chembl_target_detail(target_chembl_id: str) -> Dict[str, Any]:
     return get_json(url)
 
 
+def chembl_bioactivities(
+    molecule_chembl_id: str,
+    *,
+    min_pchembl: float = 5.0,
+    assay_types: Iterable[str] = ("B", "F"),
+    limit: int = 1000,
+) -> List[Dict[str, Any]]:
+    """Fetch bioactivity measurements (pChEMBL/IC50/EC50) for a molecule.
+
+    Parameters
+    ----------
+    molecule_chembl_id : str
+        ChEMBL molecule identifier.
+    min_pchembl : float, default=5.0
+        Minimum pChEMBL value to include (filters potency).
+    assay_types : Iterable[str], default=("B", "F")
+        Assay type codes to include, e.g., ``B`` (binding) or ``F`` (functional).
+    limit : int, default=1000
+        Maximum number of activity rows to fetch.
+
+    Returns
+    -------
+    list[dict]
+        Activity rows returned by the ChEMBL API.
+    """
+
+    url = f"{CHEMBL_API}/activity.json"
+    assay_filter = ",".join(assay_types) if assay_types else None
+    params = {
+        "molecule_chembl_id": molecule_chembl_id,
+        "limit": limit,
+        "pchembl_value__gte": min_pchembl,
+    }
+    if assay_filter:
+        params["assay_type__in"] = assay_filter
+    data = get_json(url, params=params)
+    return data.get("activities", []) or data.get("objects", []) or []
+
+
+def rxnav_interactions(drug_name: str) -> Dict[str, Any]:
+    """Fetch drug-drug interaction information from the public RxNav API.
+
+    Parameters
+    ----------
+    drug_name : str
+        Common name for the drug (e.g., ``"aspirin"``).
+
+    Returns
+    -------
+    dict
+        Raw RxNav interaction payload.
+    """
+    url = f"https://rxnav.nlm.nih.gov/REST/interaction/interaction.json"
+    return get_json(url, params={"iname": drug_name})
+
+
 __all__ = [
     "pubchem_properties",
     "pubchem_pug_view_record",
@@ -130,4 +186,6 @@ __all__ = [
     "chembl_molecules_by_inchikey",
     "chembl_mechanisms",
     "chembl_target_detail",
+    "chembl_bioactivities",
+    "rxnav_interactions",
 ]

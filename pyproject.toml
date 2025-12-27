@@ -24,6 +24,7 @@ classifiers = [
 dependencies = [
     "numpy>=1.20",
     "requests>=2.31",
+    "selfies>=2.1.1",
 ]
 
 [project.optional-dependencies]
@@ -37,6 +38,9 @@ dev = [
 docs = [
     "sphinx>=5.0",
     "sphinx-rtd-theme>=1.0",
+]
+chem = [
+    "rdkit-pypi>=2023.9.3",
 ]
 
 [project.urls]

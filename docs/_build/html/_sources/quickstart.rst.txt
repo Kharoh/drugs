@@ -37,6 +37,42 @@ Fetch properties and text
 	props = aspirin.fetch_pubchem_properties()
 	text = aspirin.fetch_pubchem_text(PUBCHEM_MINIMAL_STABLE)
 
+Structure and fingerprints
+--------------------------
+
+.. code-block:: python
+
+	smiles = aspirin.smiles()
+	selfies = aspirin.selfies()
+	fp = aspirin.molecular_fingerprint(method="morgan")
+
+Similarity and batch workflows
+------------------------------
+
+.. code-block:: python
+
+	ibuprofen = Drug.from_chembl_id("CHEMBL521")
+	sim = aspirin.similarity_to(ibuprofen)
+
+	cohort = Drug.from_batch([2244, "CHEMBL521", "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"])
+	mat = Drug.batch_similarity_matrix(cohort)
+
+Bioactivity and safety
+----------------------
+
+.. code-block:: python
+
+	acts = aspirin.fetch_chembl_bioactivities(min_pchembl=6.0, assay_types=["B", "F"])
+	ddis = aspirin.fetch_drug_interactions()
+
+RDKit property calculators
+--------------------------
+
+.. code-block:: python
+
+	props = aspirin.molecular_properties()
+	print(props["qed"], props["tpsa"], props["lipinski_violations"])
+
 Mechanisms and targets
 ----------------------
 

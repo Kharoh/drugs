@@ -48,6 +48,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#create-a-drug-object">Create a drug object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fetch-properties-and-text">Fetch properties and text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-and-fingerprints">Structure and fingerprints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#similarity-and-batch-workflows">Similarity and batch workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bioactivity-and-safety">Bioactivity and safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rdkit-property-calculators">RDKit property calculators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mechanisms-and-targets">Mechanisms and targets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#embeddings">Embeddings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#report-generation">Report generation</a></li>
@@ -111,6 +115,38 @@
 <h2>Fetch properties and text<a class="headerlink" href="#fetch-properties-and-text" title="Link to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">props</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_pubchem_properties</span><span class="p">()</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_pubchem_text</span><span class="p">(</span><span class="n">PUBCHEM_MINIMAL_STABLE</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="structure-and-fingerprints">
+<h2>Structure and fingerprints<a class="headerlink" href="#structure-and-fingerprints" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smiles</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">smiles</span><span class="p">()</span>
+<span class="n">selfies</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">selfies</span><span class="p">()</span>
+<span class="n">fp</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">molecular_fingerprint</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;morgan&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="similarity-and-batch-workflows">
+<h2>Similarity and batch workflows<a class="headerlink" href="#similarity-and-batch-workflows" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ibuprofen</span> <span class="o">=</span> <span class="n">Drug</span><span class="o">.</span><span class="n">from_chembl_id</span><span class="p">(</span><span class="s2">&quot;CHEMBL521&quot;</span><span class="p">)</span>
+<span class="n">sim</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">similarity_to</span><span class="p">(</span><span class="n">ibuprofen</span><span class="p">)</span>
+
+<span class="n">cohort</span> <span class="o">=</span> <span class="n">Drug</span><span class="o">.</span><span class="n">from_batch</span><span class="p">([</span><span class="mi">2244</span><span class="p">,</span> <span class="s2">&quot;CHEMBL521&quot;</span><span class="p">,</span> <span class="s2">&quot;BSYNRYMUTXBXSQ-UHFFFAOYSA-N&quot;</span><span class="p">])</span>
+<span class="n">mat</span> <span class="o">=</span> <span class="n">Drug</span><span class="o">.</span><span class="n">batch_similarity_matrix</span><span class="p">(</span><span class="n">cohort</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bioactivity-and-safety">
+<h2>Bioactivity and safety<a class="headerlink" href="#bioactivity-and-safety" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">acts</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_chembl_bioactivities</span><span class="p">(</span><span class="n">min_pchembl</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">assay_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">])</span>
+<span class="n">ddis</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_drug_interactions</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="rdkit-property-calculators">
+<h2>RDKit property calculators<a class="headerlink" href="#rdkit-property-calculators" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">props</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">molecular_properties</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;qed&quot;</span><span class="p">],</span> <span class="n">props</span><span class="p">[</span><span class="s2">&quot;tpsa&quot;</span><span class="p">],</span> <span class="n">props</span><span class="p">[</span><span class="s2">&quot;lipinski_violations&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </section>

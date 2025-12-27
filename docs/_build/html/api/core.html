@@ -56,9 +56,17 @@
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_pubchem_properties"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_pubchem_properties()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_pubchem_text"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_pubchem_text()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_chembl_mechanisms"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_chembl_mechanisms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_chembl_bioactivities"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_chembl_bioactivities()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_target_details"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_target_details()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_drug_interactions"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_drug_interactions()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.target_accessions"><code class="docutils literal notranslate"><span class="pre">Drug.target_accessions()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.target_gene_symbols"><code class="docutils literal notranslate"><span class="pre">Drug.target_gene_symbols()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.smiles"><code class="docutils literal notranslate"><span class="pre">Drug.smiles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.selfies"><code class="docutils literal notranslate"><span class="pre">Drug.selfies()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.rdkit_mol"><code class="docutils literal notranslate"><span class="pre">Drug.rdkit_mol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.molecular_fingerprint"><code class="docutils literal notranslate"><span class="pre">Drug.molecular_fingerprint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.similarity_to"><code class="docutils literal notranslate"><span class="pre">Drug.similarity_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.molecular_properties"><code class="docutils literal notranslate"><span class="pre">Drug.molecular_properties()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.text_corpus"><code class="docutils literal notranslate"><span class="pre">Drug.text_corpus()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.text_embedding"><code class="docutils literal notranslate"><span class="pre">Drug.text_embedding()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.esm_inputs"><code class="docutils literal notranslate"><span class="pre">Drug.esm_inputs()</span></code></a></li>
@@ -69,6 +77,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_pubchem_cid"><code class="docutils literal notranslate"><span class="pre">Drug.from_pubchem_cid()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_chembl_id"><code class="docutils literal notranslate"><span class="pre">Drug.from_chembl_id()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_inchikey"><code class="docutils literal notranslate"><span class="pre">Drug.from_inchikey()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_batch"><code class="docutils literal notranslate"><span class="pre">Drug.from_batch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.batch_similarity_matrix"><code class="docutils literal notranslate"><span class="pre">Drug.batch_similarity_matrix()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.write_drug_markdown"><code class="docutils literal notranslate"><span class="pre">Drug.write_drug_markdown()</span></code></a></li>
 </ul>
 </li>
@@ -79,6 +89,8 @@
 <li class="toctree-l2"><a class="reference internal" href="id_mapping.html">id_mapping</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features.html">features.embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chemistry.html">chemistry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cache.html">cache</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorial1.html">Tutorial: from CID to embeddings</a></li>
@@ -203,6 +215,12 @@ plug in any embedding function via <code class="docutils literal notranslate"><s
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_chembl_bioactivities">
+<span class="sig-name descname"><span class="pre">fetch_chembl_bioactivities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_pchembl</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assay_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('B',</span> <span class="pre">'F')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_chembl_bioactivities" title="Link to this definition"></a></dt>
+<dd><p>Fetch ChEMBL bioactivity rows filtered by potency and assay type.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="drugs.core.Drug.fetch_target_details">
 <span class="sig-name descname"><span class="pre">fetch_target_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_chembl_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_target_details" title="Link to this definition"></a></dt>
 <dd><p>Fetch and cache target details for a ChEMBL target ID.</p>
@@ -220,6 +238,25 @@ plug in any embedding function via <code class="docutils literal notranslate"><s
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_drug_interactions">
+<span class="sig-name descname"><span class="pre">fetch_drug_interactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drug_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_drug_interactions" title="Link to this definition"></a></dt>
+<dd><p>Fetch drug-drug interactions from RxNav using a best-effort drug name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drug_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Override the drug name to query. When omitted, the function attempts to use
+IUPAC or synonym information from PubChem properties.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Normalized interaction entries containing <code class="docutils literal notranslate"><span class="pre">source</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">interactants</span></code> (list of partner drug names).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="drugs.core.Drug.target_accessions">
 <span class="sig-name descname"><span class="pre">target_accessions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.target_accessions" title="Link to this definition"></a></dt>
 <dd><p>Return UniProt accessions for all targets linked to the drug.</p>
@@ -229,6 +266,42 @@ plug in any embedding function via <code class="docutils literal notranslate"><s
 <dt class="sig sig-object py" id="drugs.core.Drug.target_gene_symbols">
 <span class="sig-name descname"><span class="pre">target_gene_symbols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.target_gene_symbols" title="Link to this definition"></a></dt>
 <dd><p>Return gene symbols for all targets linked to the drug.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.smiles">
+<span class="sig-name descname"><span class="pre">smiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#drugs.core.Drug.smiles" title="Link to this definition"></a></dt>
+<dd><p>Return canonical SMILES string resolved from PubChem properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.selfies">
+<span class="sig-name descname"><span class="pre">selfies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#drugs.core.Drug.selfies" title="Link to this definition"></a></dt>
+<dd><p>Convert the molecule to SELFIES representation if possible.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.rdkit_mol">
+<span class="sig-name descname"><span class="pre">rdkit_mol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#drugs.core.Drug.rdkit_mol" title="Link to this definition"></a></dt>
+<dd><p>Return an RDKit molecule for the drug’s SMILES, caching the result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.molecular_fingerprint">
+<span class="sig-name descname"><span class="pre">molecular_fingerprint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'morgan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#drugs.core.Drug.molecular_fingerprint" title="Link to this definition"></a></dt>
+<dd><p>Generate a molecular fingerprint for similarity calculations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.similarity_to">
+<span class="sig-name descname"><span class="pre">similarity_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'morgan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tanimoto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#drugs.core.Drug.similarity_to" title="Link to this definition"></a></dt>
+<dd><p>Compute structural similarity to another drug using fingerprints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.molecular_properties">
+<span class="sig-name descname"><span class="pre">molecular_properties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.molecular_properties" title="Link to this definition"></a></dt>
+<dd><p>Compute RDKit-derived molecular property panel (QED, TPSA, Lipinski, SA).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -356,6 +429,18 @@ plug in any embedding function via <code class="docutils literal notranslate"><s
 <dt class="sig sig-object py" id="drugs.core.Drug.from_inchikey">
 <em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_inchikey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inchikey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a></span></span><a class="headerlink" href="#drugs.core.Drug.from_inchikey" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.from_batch">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefetch_properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.from_batch" title="Link to this definition"></a></dt>
+<dd><p>Create Drug instances from a batch of identifiers using parallel calls.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.batch_similarity_matrix">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">batch_similarity_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drugs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fingerprint_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'morgan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tanimoto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2048</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#drugs.core.Drug.batch_similarity_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute an all-vs-all similarity matrix for a list of Drug objects.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drugs.core.Drug.write_drug_markdown">

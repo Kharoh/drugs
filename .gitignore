@@ -35,3 +35,6 @@ htmlcov/
 .env
 venv/
 env/
+
+# Project
+artifacts/

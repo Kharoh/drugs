@@ -9,3 +9,5 @@ API reference
 	id_mapping
 	utils
 	features
+	chemistry
+	cache
