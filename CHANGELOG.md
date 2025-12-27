@@ -1,7 +1,6 @@
 # Changelog
 
-## [Unreleased]
-
+## [0.1.2] - 2025-12-27
 ### Added
 - SMILES and SELFIES accessors on `Drug`
 - Fingerprints (Morgan/MACCS/Daylight), Tanimoto/Dice similarity, and batch similarity matrix
@@ -15,7 +14,7 @@
 - Expanded README and quickstart with structural, bioactivity, safety, and batch examples
 - Added API docs for new chemistry and cache modules
 
-## [0.1.0] - 2025-12-27
+## [0.1.1] - 2025-12-27
 ### Added
 - Initial release
 - Core functionality
