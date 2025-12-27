@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "drugs"
-version = "0.1.0"
+dynamic = ["version"]
 description = "A short description"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -66,3 +66,6 @@ python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+
+[tool.hatch.version]
+path = "hatch/__about__.py"
