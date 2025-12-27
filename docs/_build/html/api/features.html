@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>features.embeddings &mdash; drugs  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial: from CID to embeddings" href="../tutorials/tutorial1.html" />
+    <link rel="prev" title="utils" href="utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            drugs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sources.html">data_sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="id_mapping.html">id_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">features.embeddings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.provider"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.provider</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.model"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.normalize"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.normalize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.max_chars_per_chunk"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.max_chars_per_chunk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.voyage_api_key"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.voyage_api_key</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig.openai_api_key"><code class="docutils literal notranslate"><span class="pre">TextEmbedConfig.openai_api_key</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.features.embeddings.text.make_text_embed_fn"><code class="docutils literal notranslate"><span class="pre">make_text_embed_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.features.embeddings.esm.fetch_uniprot_sequence"><code class="docutils literal notranslate"><span class="pre">fetch_uniprot_sequence()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.features.embeddings.esm.make_esm_embed_fn"><code class="docutils literal notranslate"><span class="pre">make_esm_embed_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.features.embeddings.path.default_embedding_path"><code class="docutils literal notranslate"><span class="pre">default_embedding_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorial1.html">Tutorial: from CID to embeddings</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">drugs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">features.embeddings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/features.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-drugs.features.embeddings.text">
+<span id="features-embeddings"></span><h1>features.embeddings<a class="headerlink" href="#module-drugs.features.embeddings.text" title="Link to this heading"></a></h1>
+<p>Text embedding helper utilities (VoyageAI, OpenAI, or sentence-transformers).</p>
+<p>These are optional conveniences; install the matching provider packages before use:
+- voyage: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">langchain-voyageai</span></code>
+- openai: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">openai</span></code>
+- sentence-transformers: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sentence-transformers</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drugs.features.embeddings.text.</span></span><span class="sig-name descname"><span class="pre">TextEmbedConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'voyage'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'openai'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sentence-transformers'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'voyage'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_chars_per_chunk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voyage_api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">openai_api_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration for text embedding providers and credentials.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.provider">
+<span class="sig-name descname"><span class="pre">provider</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'voyage'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'openai'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sentence-transformers'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'voyage'</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.provider" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.model">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.model" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.normalize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.max_chars_per_chunk">
+<span class="sig-name descname"><span class="pre">max_chars_per_chunk</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12000</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.max_chars_per_chunk" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.voyage_api_key">
+<span class="sig-name descname"><span class="pre">voyage_api_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.voyage_api_key" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.TextEmbedConfig.openai_api_key">
+<span class="sig-name descname"><span class="pre">openai_api_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.features.embeddings.text.TextEmbedConfig.openai_api_key" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="drugs.features.embeddings.text.make_text_embed_fn">
+<span class="sig-prename descclassname"><span class="pre">drugs.features.embeddings.text.</span></span><span class="sig-name descname"><span class="pre">make_text_embed_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig" title="drugs.features.embeddings.text.TextEmbedConfig"><span class="pre">TextEmbedConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.features.embeddings.text.make_text_embed_fn" title="Link to this definition"></a></dt>
+<dd><p>Create a text embedding callable for the configured provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<a class="reference internal" href="#drugs.features.embeddings.text.TextEmbedConfig" title="drugs.features.embeddings.text.TextEmbedConfig"><em>TextEmbedConfig</em></a>) – Provider selection, model name, normalization flag, and API keys.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Function that consumes a text string and returns a 1D float32 embedding.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[str], np.ndarray]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If required API keys are missing or provider is unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-drugs.features.embeddings.esm">ESM protein embedding helper using fair-esm models.</p>
+<p>Optional dependency: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">fair-esm</span></code>. Sequences are fetched from UniProt.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="drugs.features.embeddings.esm.fetch_uniprot_sequence">
+<span class="sig-prename descclassname"><span class="pre">drugs.features.embeddings.esm.</span></span><span class="sig-name descname"><span class="pre">fetch_uniprot_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accession</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#drugs.features.embeddings.esm.fetch_uniprot_sequence" title="Link to this definition"></a></dt>
+<dd><p>Fetch a protein sequence from UniProt’s REST API in FASTA format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>accession</strong> (<em>str</em>) – UniProt accession to fetch.</p></li>
+<li><p><strong>timeout_s</strong> (<em>int</em><em>, </em><em>default=30</em>) – Request timeout in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Amino-acid sequence string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>HTTPError</strong> – If the response status is not successful.</p></li>
+<li><p><strong>ValueError</strong> – If the FASTA payload contains no sequence lines.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="drugs.features.embeddings.esm.make_esm_embed_fn">
+<span class="sig-prename descclassname"><span class="pre">drugs.features.embeddings.esm.</span></span><span class="sig-name descname"><span class="pre">make_esm_embed_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'esm2_t12_35M_UR50D'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repr_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.features.embeddings.esm.make_esm_embed_fn" title="Link to this definition"></a></dt>
+<dd><p>Factory that builds an ESM embedding function for UniProt accessions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em><em>, </em><em>default=&quot;esm2_t12_35M_UR50D&quot;</em>) – Name of the pretrained ESM model (<code class="docutils literal notranslate"><span class="pre">esm.pretrained.&lt;model_name&gt;()</span></code>).</p></li>
+<li><p><strong>repr_layer</strong> (<em>int</em><em>, </em><em>optional</em>) – Layer index to extract representations from. Defaults to the last layer.</p></li>
+<li><p><strong>device</strong> (<em>str</em><em>, </em><em>optional</em>) – Torch device (<code class="docutils literal notranslate"><span class="pre">&quot;cuda&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code>). Auto-selects GPU if available.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Function that accepts a list of UniProt accessions and returns a stacked
+tensor of per-sequence embeddings (mean pooled token representations).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[List[str]], torch.Tensor]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the model name is unknown.</p></li>
+<li><p><strong>ImportError</strong> – If <code class="docutils literal notranslate"><span class="pre">fair-esm</span></code> is not installed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-drugs.features.embeddings.path">Feature-level helpers for embeddings and caching paths.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="drugs.features.embeddings.path.default_embedding_path">
+<span class="sig-prename descclassname"><span class="pre">drugs.features.embeddings.path.</span></span><span class="sig-name descname"><span class="pre">default_embedding_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#drugs.features.embeddings.path.default_embedding_path" title="Link to this definition"></a></dt>
+<dd><p>Build a default filesystem path for an embedding artifact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> (<em>str</em>) – Unique identifier for the entity (e.g., CID, ChEMBL ID).</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – Embedding type label (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;text&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;protein&quot;</span></code>).</p></li>
+<li><p><strong>suffix</strong> (<em>str</em>) – File suffix/extension without the leading dot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path pointing to <code class="docutils literal notranslate"><span class="pre">artifacts/embeddings/&lt;kind&gt;_&lt;identifier&gt;.&lt;suffix&gt;</span></code> with
+slashes replaced to keep it filesystem-safe.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="utils.html" class="btn btn-neutral float-left" title="utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tutorials/tutorial1.html" class="btn btn-neutral float-right" title="Tutorial: from CID to embeddings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

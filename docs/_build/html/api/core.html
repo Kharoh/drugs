@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>core &mdash; drugs  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="data_sources" href="data_sources.html" />
+    <link rel="prev" title="API reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            drugs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">core</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.core.Drug"><code class="docutils literal notranslate"><span class="pre">Drug</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.synonyms"><code class="docutils literal notranslate"><span class="pre">Drug.synonyms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.metadata"><code class="docutils literal notranslate"><span class="pre">Drug.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.pubchem_cid"><code class="docutils literal notranslate"><span class="pre">Drug.pubchem_cid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.chembl_id"><code class="docutils literal notranslate"><span class="pre">Drug.chembl_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.inchikey"><code class="docutils literal notranslate"><span class="pre">Drug.inchikey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_pubchem_properties"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_pubchem_properties()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_pubchem_text"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_pubchem_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_chembl_mechanisms"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_chembl_mechanisms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.fetch_target_details"><code class="docutils literal notranslate"><span class="pre">Drug.fetch_target_details()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.target_accessions"><code class="docutils literal notranslate"><span class="pre">Drug.target_accessions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.target_gene_symbols"><code class="docutils literal notranslate"><span class="pre">Drug.target_gene_symbols()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.text_corpus"><code class="docutils literal notranslate"><span class="pre">Drug.text_corpus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.text_embedding"><code class="docutils literal notranslate"><span class="pre">Drug.text_embedding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.esm_inputs"><code class="docutils literal notranslate"><span class="pre">Drug.esm_inputs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.protein_embedding"><code class="docutils literal notranslate"><span class="pre">Drug.protein_embedding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.protein_embedding_cached"><code class="docutils literal notranslate"><span class="pre">Drug.protein_embedding_cached()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.text_embedding_cached"><code class="docutils literal notranslate"><span class="pre">Drug.text_embedding_cached()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.map_ids"><code class="docutils literal notranslate"><span class="pre">Drug.map_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_pubchem_cid"><code class="docutils literal notranslate"><span class="pre">Drug.from_pubchem_cid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_chembl_id"><code class="docutils literal notranslate"><span class="pre">Drug.from_chembl_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.from_inchikey"><code class="docutils literal notranslate"><span class="pre">Drug.from_inchikey()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drugs.core.Drug.write_drug_markdown"><code class="docutils literal notranslate"><span class="pre">Drug.write_drug_markdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#drugs.core.list_pubchem_text_headings"><code class="docutils literal notranslate"><span class="pre">list_pubchem_text_headings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_sources.html">data_sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="id_mapping.html">id_mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features.html">features.embeddings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorial1.html">Tutorial: from CID to embeddings</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">drugs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API reference</a></li>
+      <li class="breadcrumb-item active">core</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-drugs.core">
+<span id="core"></span><h1>core<a class="headerlink" href="#module-drugs.core" title="Link to this heading"></a></h1>
+<p>High-level Drug object that lazily resolves identifiers and fetches data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="drugs.core.Drug">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drugs.core.</span></span><span class="sig-name descname"><span class="pre">Drug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_pubchem_cid:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_chembl_id:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_inchikey:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synonyms:</span> <span class="pre">~typing.List[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata:</span> <span class="pre">~typing.Dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drugs.core.Drug" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represent a drug and lazily translate between PubChem CID, ChEMBL ID, and InChIKey.</p>
+<p>Network calls are performed on demand and results are cached on the instance to
+avoid repeated HTTP calls. The class is intentionally model-agnostic: callers can
+plug in any embedding function via <code class="docutils literal notranslate"><span class="pre">text_embedding</span></code>/<code class="docutils literal notranslate"><span class="pre">protein_embedding</span></code>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.core.Drug.synonyms">
+<span class="sig-name descname"><span class="pre">synonyms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drugs.core.Drug.synonyms" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="drugs.core.Drug.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#drugs.core.Drug.metadata" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="drugs.core.Drug.pubchem_cid">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pubchem_cid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.core.Drug.pubchem_cid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="drugs.core.Drug.chembl_id">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">chembl_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.core.Drug.chembl_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="drugs.core.Drug.inchikey">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inchikey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#drugs.core.Drug.inchikey" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_pubchem_properties">
+<span class="sig-name descname"><span class="pre">fetch_pubchem_properties</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_pubchem_properties" title="Link to this definition"></a></dt>
+<dd><p>Retrieve and cache core PubChem properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of properties for the resolved PubChem CID.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If no resolvable PubChem CID is available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_pubchem_text">
+<span class="sig-name descname"><span class="pre">fetch_pubchem_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['Record</span> <span class="pre">Description',</span> <span class="pre">'Drug</span> <span class="pre">and</span> <span class="pre">Medication</span> <span class="pre">Information',</span> <span class="pre">'Names</span> <span class="pre">and</span> <span class="pre">Identifiers',</span> <span class="pre">'Synonyms']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_pubchem_text" title="Link to this definition"></a></dt>
+<dd><p>Fetch and cache selected PubChem PUG-View text sections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>headings</strong> (<em>Iterable</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Headings to request. Defaults to <code class="docutils literal notranslate"><span class="pre">PUBCHEM_MINIMAL_STABLE</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping of heading -&gt; section metadata and extracted strings.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no resolvable PubChem CID is available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_chembl_mechanisms">
+<span class="sig-name descname"><span class="pre">fetch_chembl_mechanisms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_chembl_mechanisms" title="Link to this definition"></a></dt>
+<dd><p>Fetch mechanisms of action for the drug’s ChEMBL ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=50</em>) – Maximum number of mechanism records to fetch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mechanism entries from the ChEMBL API.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no resolvable ChEMBL ID is available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.fetch_target_details">
+<span class="sig-name descname"><span class="pre">fetch_target_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_chembl_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.fetch_target_details" title="Link to this definition"></a></dt>
+<dd><p>Fetch and cache target details for a ChEMBL target ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target_chembl_id</strong> (<em>str</em>) – ChEMBL target identifier.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target detail payload including components and synonyms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.target_accessions">
+<span class="sig-name descname"><span class="pre">target_accessions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.target_accessions" title="Link to this definition"></a></dt>
+<dd><p>Return UniProt accessions for all targets linked to the drug.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.target_gene_symbols">
+<span class="sig-name descname"><span class="pre">target_gene_symbols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.target_gene_symbols" title="Link to this definition"></a></dt>
+<dd><p>Return gene symbols for all targets linked to the drug.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.text_corpus">
+<span class="sig-name descname"><span class="pre">text_corpus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['Record</span> <span class="pre">Description',</span> <span class="pre">'Drug</span> <span class="pre">and</span> <span class="pre">Medication</span> <span class="pre">Information',</span> <span class="pre">'Names</span> <span class="pre">and</span> <span class="pre">Identifiers',</span> <span class="pre">'Synonyms']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#drugs.core.Drug.text_corpus" title="Link to this definition"></a></dt>
+<dd><p>Concatenate PubChem text snippets into a markdown-ish corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>headings</strong> (<em>Iterable</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Headings to include. Defaults to <code class="docutils literal notranslate"><span class="pre">PUBCHEM_MINIMAL_STABLE</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted corpus with heading markers and snippets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.text_embedding">
+<span class="sig-name descname"><span class="pre">text_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embed_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['Record</span> <span class="pre">Description',</span> <span class="pre">'Drug</span> <span class="pre">and</span> <span class="pre">Medication</span> <span class="pre">Information',</span> <span class="pre">'Names</span> <span class="pre">and</span> <span class="pre">Identifiers',</span> <span class="pre">'Synonyms']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#drugs.core.Drug.text_embedding" title="Link to this definition"></a></dt>
+<dd><p>Compute a text embedding over the PubChem corpus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – User-provided embedding function accepting a text corpus.</p></li>
+<li><p><strong>headings</strong> (<em>Iterable</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Headings to include when building the corpus.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embedding output as returned by <code class="docutils literal notranslate"><span class="pre">embed_fn</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.esm_inputs">
+<span class="sig-name descname"><span class="pre">esm_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.esm_inputs" title="Link to this definition"></a></dt>
+<dd><p>Return UniProt accessions to feed into a protein embedding model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.protein_embedding">
+<span class="sig-name descname"><span class="pre">protein_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embed_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#drugs.core.Drug.protein_embedding" title="Link to this definition"></a></dt>
+<dd><p>Compute a protein embedding over target accessions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embed_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – Embedding function that consumes a list of UniProt accessions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embedding output as returned by <code class="docutils literal notranslate"><span class="pre">embed_fn</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.protein_embedding_cached">
+<span class="sig-name descname"><span class="pre">protein_embedding_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embed_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_if_exists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#drugs.core.Drug.protein_embedding_cached" title="Link to this definition"></a></dt>
+<dd><p>Compute or load a cached protein embedding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – Embedding function consuming accessions.</p></li>
+<li><p><strong>path</strong> (<em>pathlib.Path</em><em>, </em><em>optional</em>) – Custom output path. Defaults to an auto-generated path.</p></li>
+<li><p><strong>load_if_exists</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Return the cached embedding if the file already exists.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Recompute even if the cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embedding output returned by <code class="docutils literal notranslate"><span class="pre">embed_fn</span></code> or loaded from disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.text_embedding_cached">
+<span class="sig-name descname"><span class="pre">text_embedding_cached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embed_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">headings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['Record</span> <span class="pre">Description',</span> <span class="pre">'Drug</span> <span class="pre">and</span> <span class="pre">Medication</span> <span class="pre">Information',</span> <span class="pre">'Names</span> <span class="pre">and</span> <span class="pre">Identifiers',</span> <span class="pre">'Synonyms']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_if_exists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#drugs.core.Drug.text_embedding_cached" title="Link to this definition"></a></dt>
+<dd><p>Compute or load a cached text embedding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>Any</em><em>]</em>) – Embedding function consuming a corpus string.</p></li>
+<li><p><strong>headings</strong> (<em>Iterable</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Headings to include when building the corpus.</p></li>
+<li><p><strong>path</strong> (<em>pathlib.Path</em><em>, </em><em>optional</em>) – Custom output path. Defaults to an auto-generated path.</p></li>
+<li><p><strong>load_if_exists</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Return the cached embedding if the file already exists.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Recompute even if the cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embedding output returned by <code class="docutils literal notranslate"><span class="pre">embed_fn</span></code> or loaded from disk.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.map_ids">
+<span class="sig-name descname"><span class="pre">map_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.Drug.map_ids" title="Link to this definition"></a></dt>
+<dd><p>Return a dictionary with the best-effort resolved identifiers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.from_pubchem_cid">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pubchem_cid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a></span></span><a class="headerlink" href="#drugs.core.Drug.from_pubchem_cid" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.from_chembl_id">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_chembl_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chembl_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a></span></span><a class="headerlink" href="#drugs.core.Drug.from_chembl_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.from_inchikey">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_inchikey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inchikey</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#drugs.core.Drug" title="drugs.core.Drug"><span class="pre">Drug</span></a></span></span><a class="headerlink" href="#drugs.core.Drug.from_inchikey" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drugs.core.Drug.write_drug_markdown">
+<span class="sig-name descname"><span class="pre">write_drug_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">headings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['Record</span> <span class="pre">Description',</span> <span class="pre">'Drug</span> <span class="pre">and</span> <span class="pre">Medication</span> <span class="pre">Information',</span> <span class="pre">'Names</span> <span class="pre">and</span> <span class="pre">Identifiers',</span> <span class="pre">'Synonyms']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">WindowsPath('drug_report.md')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_mechanisms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="headerlink" href="#drugs.core.Drug.write_drug_markdown" title="Link to this definition"></a></dt>
+<dd><p>Fetch drug information and persist a Markdown report.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>headings</strong> (<em>Iterable</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – PUG-View headings to include in the text corpus.</p></li>
+<li><p><strong>output_path</strong> (<em>pathlib.Path</em><em>, </em><em>default=&quot;drug_report.md&quot;</em>) – Destination path for the report.</p></li>
+<li><p><strong>include_mechanisms</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Include ChEMBL mechanism-of-action entries.</p></li>
+<li><p><strong>include_targets</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Include UniProt accessions and gene symbols.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the written Markdown file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="drugs.core.list_pubchem_text_headings">
+<span class="sig-prename descclassname"><span class="pre">drugs.core.</span></span><span class="sig-name descname"><span class="pre">list_pubchem_text_headings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#drugs.core.list_pubchem_text_headings" title="Link to this definition"></a></dt>
+<dd><p>List PUG-View headings available for a compound.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cid</strong> (<em>int</em>) – PubChem compound identifier.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Unique heading labels in first-seen order.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="API reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data_sources.html" class="btn btn-neutral float-right" title="data_sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

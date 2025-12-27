@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart &mdash; drugs  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API reference" href="api/index.html" />
+    <link rel="prev" title="drugs documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            drugs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-drug-object">Create a drug object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fetch-properties-and-text">Fetch properties and text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mechanisms-and-targets">Mechanisms and targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embeddings">Embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#report-generation">Report generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorial1.html">Tutorial: from CID to embeddings</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">drugs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="p">.</span>
+</pre></div>
+</div>
+<p>If you plan to build the docs, add the <code class="docutils literal notranslate"><span class="pre">docs</span></code> extra:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">-e</span> <span class="s2">&quot;.[docs]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="create-a-drug-object">
+<h2>Create a drug object<a class="headerlink" href="#create-a-drug-object" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">drugs</span><span class="w"> </span><span class="kn">import</span> <span class="n">Drug</span><span class="p">,</span> <span class="n">PUBCHEM_MINIMAL_STABLE</span>
+
+<span class="c1"># Start from any identifier</span>
+<span class="n">aspirin</span> <span class="o">=</span> <span class="n">Drug</span><span class="o">.</span><span class="n">from_pubchem_cid</span><span class="p">(</span><span class="mi">2244</span><span class="p">)</span>
+<span class="c1"># alternatives:</span>
+<span class="c1"># Drug.from_chembl_id(&quot;CHEMBL25&quot;)</span>
+<span class="c1"># Drug.from_inchikey(&quot;BSYNRYMUTXBXSQ-UHFFFAOYSA-N&quot;)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">aspirin</span><span class="o">.</span><span class="n">map_ids</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="fetch-properties-and-text">
+<h2>Fetch properties and text<a class="headerlink" href="#fetch-properties-and-text" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">props</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_pubchem_properties</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_pubchem_text</span><span class="p">(</span><span class="n">PUBCHEM_MINIMAL_STABLE</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mechanisms-and-targets">
+<h2>Mechanisms and targets<a class="headerlink" href="#mechanisms-and-targets" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mechs</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">fetch_chembl_mechanisms</span><span class="p">()</span>
+<span class="n">accessions</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">target_accessions</span><span class="p">()</span>
+<span class="n">genes</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">target_gene_symbols</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="embeddings">
+<h2>Embeddings<a class="headerlink" href="#embeddings" title="Link to this heading"></a></h2>
+<p>Plug in any embedding function. A trivial example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vec</span> <span class="o">=</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">text_embedding</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="report-generation">
+<h2>Report generation<a class="headerlink" href="#report-generation" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aspirin</span><span class="o">.</span><span class="n">write_drug_markdown</span><span class="p">(</span><span class="n">output_path</span><span class="o">=</span><span class="s2">&quot;aspirin.md&quot;</span><span class="p">)</span>
+<span class="c1"># yields artifacts/embeddings when using cached embedding helpers</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="drugs documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/index.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
